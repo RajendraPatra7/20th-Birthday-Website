@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy 20th Birthday Rachayeta 💖</title>
+  <meta name="description" content="A special birthday surprise for Miss Rachayeta Biswas on her 20th birthday ❤️">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Hearts (Background) -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <!-- Floating Stars (Final section) -->
+  <div class="floating-stars" id="floatingStars"></div>
+
+  <!-- Music Toggle -->
+  <button id="musicToggle" aria-label="Toggle music">🔊</button>
+
+  <!-- Audio -->
+  <audio id="bgMusic" loop preload="auto">
+    <!-- REPLACE: Song -->
+    <source src="assets/music/perfect-instrumental.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ===== 0. LOADING SCREEN ===== -->
+  <section class="section active" id="loading">
+    <!-- REPLACE: Name -->
+    <h1 class="loader-name">Rachayeta Biswas</h1>
+    <!-- REPLACE: Subtitle -->
+    <p class="loader-sub">20 years of someone very special...</p>
+  </section>
+
+  <!-- ===== 1. LANDING PAGE ===== -->
+  <section class="section" id="landing">
+    <div class="landing-content">
+      <!-- REPLACE: Name -->
+      <h2 class="landing-title">Hey Miss Rachayeta Biswas ❤️<br>I made something for you...</h2>
+      <p class="landing-subtitle">Tap below to begin your birthday surprise ✨</p>
+      <button class="btn btn-primary" id="enterBtn">Enter ✨</button>
+    </div>
+  </section>
+
+  <!-- ===== 2. CAKE SECTION ===== -->
+  <section class="section" id="cake">
+    <!-- REPLACE: Name -->
+    <h2 class="cake-title">Happy 20th Birthday 🎂<br>Miss Rachayeta Biswas 💖</h2>
+    <p class="cake-subtitle">Tap each candle to blow it out 🕯️</p>
+    <p class="candle-counter"><span id="candleCount">0</span> / 20 candles</p>
+
+    <div class="candle-grid" id="candleGrid">
+      <!-- 20 candles rendered by JS -->
+    </div>
+
+    <!-- Wish popup container -->
+    <div class="wish-popup" id="wishPopup"></div>
+
+    <!-- Final message (shown after all 20) -->
+    <div class="final-wish-msg" id="finalWishMsg" style="display:none;">
+      <p>Now… your wish has been made ✨</p>
+    </div>
+  </section>
+
+  <!-- ===== 3. WISHES SECTION ===== -->
+  <section class="section" id="wishes">
+    <h2 class="section-title">Birthday Wishes 💌</h2>
+
+    <div class="wish-cards">
+      <!-- REPLACE: Wishes -->
+      <div class="wish-card" data-wish="0">
+        <span class="wish-emoji">💖</span>
+        <p class="wish-text">Write your birthday wish here...</p>
+        <p class="wish-label">Cute</p>
+      </div>
+      <div class="wish-card" data-wish="1">
+        <span class="wish-emoji">🌸</span>
+        <p class="wish-text">You are special because...</p>
+        <p class="wish-label">Appreciation</p>
+      </div>
+      <div class="wish-card" data-wish="2">
+        <span class="wish-emoji">✨</span>
+        <p class="wish-text">I hope this year brings you...</p>
+        <p class="wish-label">Emotional</p>
+      </div>
+      <div class="wish-card" data-wish="3">
+        <span class="wish-emoji">💕</span>
+        <p class="wish-text">Something meaningful...</p>
+        <p class="wish-label">Deep</p>
+      </div>
+    </div>
+
+    <button class="btn btn-secondary" id="wishesNext" style="margin-top:1.5rem;">Next →</button>
+  </section>
+
+  <!-- Wish Modal -->
+  <div class="wish-modal-overlay" id="wishModalOverlay">
+    <div class="wish-modal">
+      <span class="wish-emoji" id="modalEmoji"></span>
+      <p class="wish-text" id="modalText"></p>
+      <p class="wish-label" id="modalLabel"></p>
+      <button class="wish-modal-close" id="wishModalClose">Close</button>
+    </div>
+  </div>
+
+  <!-- ===== 4. MEMORIES SECTION ===== -->
+  <section class="section" id="memories">
+    <h2 class="section-title">Some moments I never want to forget...</h2>
+
+    <div class="memory-grid" id="memoryGrid">
+      <!-- REPLACE: Memory / Image / Date / Description -->
+      <div class="polaroid" data-mem="0">
+        <img src="assets/images/placeholder.jpg" alt="Memory 1">
+        <div class="polaroid-info">
+          <p class="polaroid-title">A Special Day 💖</p>
+          <p class="polaroid-date">08 May 2025</p>
+        </div>
+        <span class="polaroid-sticker">🐰</span>
+      </div>
+      <div class="polaroid" data-mem="1">
+        <img src="assets/images/placeholder.jpg" alt="Memory 2">
+        <div class="polaroid-info">
+          <p class="polaroid-title">That One Evening 🌸</p>
+          <p class="polaroid-date">14 Feb 2025</p>
+        </div>
+        <span class="polaroid-sticker">🎀</span>
+      </div>
+      <div class="polaroid" data-mem="2">
+        <img src="assets/images/placeholder.jpg" alt="Memory 3">
+        <div class="polaroid-info">
+          <p class="polaroid-title">Us Being Us 😄</p>
+          <p class="polaroid-date">01 Jan 2025</p>
+        </div>
+        <span class="polaroid-sticker">💕</span>
+      </div>
+      <div class="polaroid" data-mem="3">
+        <img src="assets/images/placeholder.jpg" alt="Memory 4">
+        <div class="polaroid-info">
+          <p class="polaroid-title">Golden Hour ✨</p>
+          <p class="polaroid-date">25 Dec 2024</p>
+        </div>
+        <span class="polaroid-sticker">🐰</span>
+      </div>
+      <div class="polaroid" data-mem="4">
+        <img src="assets/images/placeholder.jpg" alt="Memory 5">
+        <div class="polaroid-info">
+          <p class="polaroid-title">First Laugh 💖</p>
+          <p class="polaroid-date">15 Nov 2024</p>
+        </div>
+        <span class="polaroid-sticker">🎀</span>
+      </div>
+      <div class="polaroid" data-mem="5">
+        <img src="assets/images/placeholder.jpg" alt="Memory 6">
+        <div class="polaroid-info">
+          <p class="polaroid-title">Unexpected 🌷</p>
+          <p class="polaroid-date">10 Oct 2024</p>
+        </div>
+        <span class="polaroid-sticker">💕</span>
+      </div>
+      <div class="polaroid" data-mem="6">
+        <img src="assets/images/placeholder.jpg" alt="Memory 7">
+        <div class="polaroid-info">
+          <p class="polaroid-title">Best Day Ever 🌸</p>
+          <p class="polaroid-date">08 Aug 2024</p>
+        </div>
+        <span class="polaroid-sticker">🐰</span>
+      </div>
+      <div class="polaroid" data-mem="7">
+        <img src="assets/images/placeholder.jpg" alt="Memory 8">
+        <div class="polaroid-info">
+          <p class="polaroid-title">Just You 💖</p>
+          <p class="polaroid-date">01 May 2024</p>
+        </div>
+        <span class="polaroid-sticker">🎀</span>
+      </div>
+    </div>
+
+    <button class="btn btn-secondary" id="memoriesNext" style="margin-top:1.5rem;">Next →</button>
+  </section>
+
+  <!-- Memory Modal -->
+  <div class="memory-modal-overlay" id="memoryModalOverlay">
+    <div class="memory-modal">
+      <img src="" alt="" id="memModalImg">
+      <div class="memory-modal-info">
+        <h3 id="memModalTitle"></h3>
+        <p class="mem-date" id="memModalDate"></p>
+        <!-- REPLACE: Description -->
+        <p class="mem-desc" id="memModalDesc">Write your memory here...</p>
+      </div>
+      <button class="memory-modal-close" id="memModalClose">Close</button>
+    </div>
+  </div>
+
+  <!-- ===== 5. SECRET SECTION ===== -->
+  <section class="section" id="secret">
+    <button class="secret-btn" id="secretBtn">Don't click… seriously 😶</button>
+    <div class="secret-reveal" id="secretReveal">
+      <p class="secret-line1">Okay… I knew you would click 😄</p>
+      <p class="secret-line2">I act like this a lot…<br>but I really care about you ❤️</p>
+    </div>
+    <button class="btn btn-secondary" id="secretNext" style="display:none; margin-top:2rem;">Next →</button>
+  </section>
+
+  <!-- ===== 6. FINAL SECTION ===== -->
+  <section class="section" id="final">
+    <!-- REPLACE: Final Message -->
+    <h2 class="final-title">Happy 20th Birthday<br>Miss Rachayeta Biswas ❤️</h2>
+    <p class="final-subtitle">This is just a small part of how much you mean to me.</p>
+    <button class="btn btn-primary" id="finalBtn" style="margin-top:2rem;">One last thing...</button>
+    <div class="final-last-msg" id="finalLastMsg">
+      <p>Thank you for being in my life ❤️</p>
+    </div>
+  </section>
+
+  <!-- Confetti Container -->
+  <div class="confetti-container" id="confettiContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,802 @@
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --bg: #0f0f1a;
+  --bg-card: rgba(30, 25, 50, 0.85);
+  --pink: #ff6b9d;
+  --pink-glow: rgba(255, 107, 157, 0.4);
+  --lavender: #cdb4db;
+  --text: #f8f9fa;
+  --text-dim: rgba(248, 249, 250, 0.6);
+  --gold: #ffd700;
+  --transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.section.active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+
+/* ===== LOADING SCREEN ===== */
+#loading {
+  background: var(--bg);
+  z-index: 100;
+}
+
+#loading .loader-name {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  color: var(--pink);
+  opacity: 0;
+  animation: fadeInUp 1s 0.3s forwards;
+  text-align: center;
+  text-shadow: 0 0 30px var(--pink-glow);
+}
+
+#loading .loader-sub {
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  color: var(--lavender);
+  opacity: 0;
+  animation: fadeInUp 1s 1s forwards;
+  margin-top: 1rem;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ===== LANDING PAGE ===== */
+#landing .landing-content {
+  text-align: center;
+  max-width: 420px;
+}
+
+#landing .landing-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.6rem, 6vw, 2.5rem);
+  color: var(--pink);
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 25px var(--pink-glow);
+}
+
+#landing .landing-subtitle {
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  color: var(--lavender);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink), #e855a0);
+  color: #fff;
+  box-shadow: 0 4px 25px var(--pink-glow);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 15px var(--pink-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--lavender);
+  border: 1.5px solid rgba(205, 180, 219, 0.3);
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+}
+
+.btn-secondary:active {
+  background: rgba(205, 180, 219, 0.1);
+}
+
+/* ===== MUSIC TOGGLE ===== */
+#musicToggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(205, 180, 219, 0.3);
+  background: rgba(15, 15, 26, 0.8);
+  backdrop-filter: blur(10px);
+  color: var(--lavender);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+#musicToggle.visible { display: flex; }
+
+/* ===== CAKE SECTION ===== */
+#cake {
+  gap: 1rem;
+}
+
+#cake .cake-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+  color: var(--pink);
+  text-align: center;
+  text-shadow: 0 0 25px var(--pink-glow);
+  line-height: 1.4;
+}
+
+.cake-subtitle {
+  font-size: 0.95rem;
+  color: var(--lavender);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Candle Counter */
+.candle-counter {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.candle-counter span {
+  color: var(--pink);
+  font-weight: 700;
+}
+
+/* Candle Grid */
+.candle-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.8rem;
+  max-width: 320px;
+  width: 100%;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 1px solid rgba(205, 180, 219, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+/* Individual Candle */
+.candle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.candle:active { transform: scale(0.9); }
+
+.candle-body {
+  width: 18px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--pink), #e855a0);
+  border-radius: 3px 3px 5px 5px;
+  position: relative;
+}
+
+.candle-body::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 8px;
+  background: #333;
+}
+
+.candle-flame {
+  width: 12px;
+  height: 18px;
+  background: radial-gradient(ellipse, var(--gold), #ff8c00, transparent);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: flicker 0.4s infinite alternate;
+  filter: blur(0.5px);
+  transition: opacity 0.5s ease;
+}
+
+.candle.blown .candle-flame {
+  opacity: 0;
+  animation: none;
+}
+
+.candle.blown .candle-body {
+  background: linear-gradient(to bottom, #666, #555);
+  opacity: 0.5;
+}
+
+/* Smoke */
+.candle-smoke {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: rgba(200, 200, 200, 0.4);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.candle.blown .candle-smoke {
+  animation: smokeRise 1s forwards;
+}
+
+@keyframes flicker {
+  0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+  100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+}
+
+@keyframes smokeRise {
+  0% { opacity: 0.6; transform: translateX(-50%) translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(2); }
+}
+
+/* Wish Message Popup */
+.wish-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  text-align: center;
+  padding: 1.5rem 2rem;
+  max-width: 320px;
+  width: 90%;
+  pointer-events: none;
+}
+
+.wish-popup p {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+  color: var(--pink);
+  text-shadow: 0 0 20px var(--pink-glow);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: wishFloat 2.5s forwards;
+}
+
+@keyframes wishFloat {
+  0% { opacity: 0; transform: translateY(20px); }
+  15% { opacity: 1; transform: translateY(0); }
+  75% { opacity: 1; transform: translateY(-5px); }
+  100% { opacity: 0; transform: translateY(-15px); }
+}
+
+/* Final candle message */
+.final-wish-msg {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.final-wish-msg p {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.3rem, 5vw, 1.8rem);
+  color: var(--gold);
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
+}
+
+/* ===== WISHES SECTION ===== */
+#wishes {
+  gap: 1.5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+#wishes .section-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: var(--pink);
+  text-shadow: 0 0 25px var(--pink-glow);
+  text-align: center;
+}
+
+.wish-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 380px;
+  width: 100%;
+}
+
+.wish-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(205, 180, 219, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.wish-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), transparent);
+  pointer-events: none;
+}
+
+.wish-card:active { transform: scale(0.97); }
+
+.wish-card .wish-emoji {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.wish-card .wish-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.wish-card .wish-label {
+  font-size: 0.75rem;
+  color: var(--lavender);
+  margin-top: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Wish modal */
+.wish-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.wish-modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.wish-modal {
+  background: var(--bg-card);
+  border: 1px solid rgba(205, 180, 219, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform 0.4s ease;
+  backdrop-filter: blur(15px);
+}
+
+.wish-modal-overlay.active .wish-modal {
+  transform: scale(1);
+}
+
+.wish-modal .wish-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
+.wish-modal .wish-text { font-size: 1.15rem; line-height: 1.7; }
+.wish-modal .wish-label { margin-top: 1rem; font-size: 0.8rem; color: var(--lavender); }
+
+.wish-modal-close {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid rgba(205, 180, 219, 0.3);
+  background: transparent;
+  color: var(--lavender);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* ===== MEMORIES SECTION ===== */
+#memories {
+  gap: 1.5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+#memories .section-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  color: var(--lavender);
+  text-align: center;
+  font-style: italic;
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+.polaroid {
+  background: #faf8f5;
+  border-radius: 6px;
+  padding: 0.5rem 0.5rem 1.2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.4s ease;
+  position: relative;
+}
+
+.polaroid:nth-child(odd) { transform: rotate(-2deg); }
+.polaroid:nth-child(even) { transform: rotate(1.5deg); }
+
+.polaroid:active {
+  transform: scale(0.95) rotate(0deg) !important;
+}
+
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 3px;
+  display: block;
+}
+
+.polaroid-info {
+  padding: 0.5rem 0.2rem 0;
+}
+
+.polaroid-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 0.85rem;
+  color: #333;
+  margin-bottom: 0.15rem;
+}
+
+.polaroid-date {
+  font-size: 0.65rem;
+  color: #888;
+}
+
+.polaroid-sticker {
+  position: absolute;
+  font-size: 1.2rem;
+  top: -8px;
+  right: -5px;
+}
+
+/* Memory modal */
+.memory-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(8px);
+}
+
+.memory-modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.memory-modal {
+  background: #faf8f5;
+  border-radius: 12px;
+  padding: 1rem;
+  max-width: 340px;
+  width: 100%;
+  transform: scale(0.85);
+  transition: transform 0.4s ease;
+}
+
+.memory-modal-overlay.active .memory-modal { transform: scale(1); }
+
+.memory-modal img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.memory-modal-info { padding: 1rem 0.5rem; text-align: center; }
+
+.memory-modal-info h3 {
+  font-family: 'Dancing Script', cursive;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.memory-modal-info .mem-date {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0.3rem 0 0.6rem;
+}
+
+.memory-modal-info .mem-desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.memory-modal-close {
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid #ccc;
+  background: transparent;
+  color: #666;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ===== SECRET SECTION ===== */
+#secret {
+  gap: 1.5rem;
+}
+
+.secret-btn {
+  padding: 1.2rem 2.5rem;
+  border-radius: 50px;
+  background: transparent;
+  border: 2px dashed rgba(205, 180, 219, 0.4);
+  color: var(--lavender);
+  font-size: 1.1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  animation: secretPulse 2s infinite;
+}
+
+@keyframes secretPulse {
+  0%, 100% { border-color: rgba(205, 180, 219, 0.4); }
+  50% { border-color: rgba(255, 107, 157, 0.6); }
+}
+
+.secret-btn:active { transform: scale(0.95); }
+
+.secret-reveal {
+  text-align: center;
+  max-width: 340px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.secret-reveal.show { opacity: 1; }
+
+.secret-reveal .secret-line1 {
+  font-size: 1.1rem;
+  color: var(--lavender);
+  margin-bottom: 1.5rem;
+}
+
+.secret-reveal .secret-line2 {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+  color: var(--pink);
+  line-height: 1.6;
+  text-shadow: 0 0 20px var(--pink-glow);
+  opacity: 0;
+  transition: opacity 0.8s ease 1s;
+}
+
+.secret-reveal.show .secret-line2 { opacity: 1; }
+
+/* ===== FINAL SECTION ===== */
+#final {
+  gap: 1.5rem;
+  text-align: center;
+}
+
+#final .final-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+  color: var(--pink);
+  line-height: 1.4;
+  text-shadow: 0 0 30px var(--pink-glow);
+}
+
+#final .final-subtitle {
+  font-size: 1rem;
+  color: var(--lavender);
+  line-height: 1.7;
+  max-width: 340px;
+  margin-top: 0.5rem;
+}
+
+.final-last-msg {
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  margin-top: 1rem;
+}
+
+.final-last-msg.show { opacity: 1; }
+
+.final-last-msg p {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.3rem, 5vw, 1.8rem);
+  color: var(--gold);
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+}
+
+/* ===== FLOATING HEARTS ===== */
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heart {
+  position: absolute;
+  bottom: -30px;
+  font-size: 1.2rem;
+  opacity: 0.3;
+  animation: heartFloat linear infinite;
+}
+
+@keyframes heartFloat {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+/* ===== FLOATING STARS (Final section) ===== */
+.floating-stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  font-size: 0.8rem;
+  opacity: 0;
+  animation: starTwinkle 3s infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+/* ===== UTILITY ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s forwards;
+}
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 8px;
+  height: 12px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 480px) {
+  .candle-grid {
+    max-width: 380px;
+    gap: 1rem;
+  }
+  .candle-body {
+    width: 22px;
+    height: 48px;
+  }
+  .memory-grid {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 768px) {
+  .memory-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 700px;
+  }
+  .wish-cards {
+    max-width: 500px;
+  }
+}
