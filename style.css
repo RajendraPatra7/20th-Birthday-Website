@@ -144,6 +144,31 @@ body {
   background: rgba(205, 180, 219, 0.1);
 }
 
+/* BUG FIX 1: Skip button — subtle, bottom of cake screen */
+.btn-skip {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: transparent;
+  color: rgba(205, 180, 219, 0.4);
+  border: 1px solid rgba(205, 180, 219, 0.15);
+  padding: 0.5rem 1.4rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+.btn-skip:active {
+  color: var(--lavender);
+  border-color: rgba(205, 180, 219, 0.35);
+}
+
 /* ===== MUSIC TOGGLE ===== */
 #musicToggle {
   position: fixed;
@@ -168,30 +193,52 @@ body {
 #musicToggle.visible { display: flex; }
 
 /* ===== CAKE SECTION ===== */
-#cake {
-  gap: 0;
-  padding: 0;
+ #cake {
+   gap: 0;
+   padding: 0;
+   position: relative;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-end;
+   align-items: center;
+   padding-bottom: 0;
+ }
+
+
+.cake-container {
+  width: 100%;
+  height: 85vh; /* increased so cake can sit lower */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   position: relative;
-  overflow: hidden;
+  z-index: 1;
+  padding-bottom: 0;
 }
 
-/* 3D Canvas fills the entire section */
 .cake-canvas-container {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  transform: translateY(40px); /* push cake visually lower */
 }
 
 .cake-canvas-container canvas {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+  transform: translateY(20px); /* extra fine adjustment downward */
 }
 
-/* HTML Overlay at the top */
 .cake-overlay {
   position: absolute;
-  top: 0;
+  top: 1rem;
   left: 0;
   right: 0;
   z-index: 10;
@@ -222,7 +269,6 @@ body {
   margin-top: 0.2rem;
 }
 
-/* Candle Counter */
 .candle-counter {
   font-size: 0.85rem;
   color: var(--text-dim);
@@ -234,7 +280,7 @@ body {
   font-weight: 700;
 }
 
-/* ===== WISH POPUP (Smooth single message) ===== */
+/* ===== WISH POPUP ===== */
 .wish-popup {
   position: relative;
   z-index: 50;
@@ -458,6 +504,7 @@ body {
   object-fit: cover;
   border-radius: 3px;
   display: block;
+  min-height: 80px; /* ensures gradient placeholder has visible height */
 }
 
 .polaroid-info {
@@ -521,6 +568,7 @@ body {
   aspect-ratio: 4/3;
   object-fit: cover;
   border-radius: 8px;
+  min-height: 60px;
 }
 
 .memory-modal-info { padding: 1rem 0.5rem; text-align: center; }
@@ -629,6 +677,7 @@ body {
   margin-top: 0.5rem;
 }
 
+/* BUG FIX 3: final-last-msg needs opacity:0 as default with transition for rAF fix to work */
 .final-last-msg {
   text-align: center;
   opacity: 0;
@@ -744,5 +793,3 @@ body {
     max-width: 500px;
   }
 }
-
-

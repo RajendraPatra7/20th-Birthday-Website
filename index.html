@@ -24,7 +24,6 @@
 
   <!-- Audio -->
   <audio id="bgMusic" loop preload="auto">
-    <!-- REPLACE: Song -->
     <source src="assets/music/Until I Found You ( instrumental).mp3" type="audio/mpeg">
   </audio>
 
@@ -32,7 +31,7 @@
   <section class="section active" id="loading">
     <!-- REPLACE: Name -->
     <h1 class="loader-name">Rachayeta Biswas</h1>
-    <!-- REPLACE: Subtitle -->
+    <!-- REPLACE: Small Text — ADD LATER -->
     <p class="loader-sub">20 years of someone very special...</p>
   </section>
 
@@ -49,7 +48,9 @@
   <!-- ===== 2. CAKE SECTION ===== -->
   <section class="section" id="cake">
     <!-- 3D Canvas -->
-    <div class="cake-canvas-container" id="cakeCanvasContainer"></div>
+    <div class="cake-container">
+      <div class="cake-canvas-container" id="cakeCanvasContainer"></div>
+    </div>
 
     <!-- HTML Overlay -->
     <div class="cake-overlay">
@@ -60,11 +61,11 @@
 
       <!-- Wish popup -->
       <div class="wish-popup" id="wishPopup"></div>
-    </div>
 
-    <!-- Final message (shown after all 20) -->
-    <div class="final-wish-msg" id="finalWishMsg" style="display:none;">
-      <p>Now… your wish has been made ✨</p>
+      <!-- Final message (shown after all 20) -->
+      <div class="final-wish-msg" id="finalWishMsg" style="display:none;">
+        <p>Now… your wish has been made ✨</p>
+      </div>
     </div>
   </section>
 
@@ -116,7 +117,7 @@
     <div class="memory-grid" id="memoryGrid">
       <!-- REPLACE: Memory / Image / Date / Description -->
       <div class="polaroid" data-mem="0">
-        <img src="assets/images/placeholder.jpg" alt="Memory 1">
+        <img src="assets/images/placeholder.jpg" alt="Memory 1" onerror="this.style.background='linear-gradient(135deg,#ff6b9d,#cdb4db)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">A Special Day 💖</p>
           <p class="polaroid-date">08 May 2025</p>
@@ -124,7 +125,7 @@
         <span class="polaroid-sticker">🐰</span>
       </div>
       <div class="polaroid" data-mem="1">
-        <img src="assets/images/placeholder.jpg" alt="Memory 2">
+        <img src="assets/images/placeholder.jpg" alt="Memory 2" onerror="this.style.background='linear-gradient(135deg,#cdb4db,#ff6b9d)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">That One Evening 🌸</p>
           <p class="polaroid-date">14 Feb 2025</p>
@@ -132,7 +133,7 @@
         <span class="polaroid-sticker">🎀</span>
       </div>
       <div class="polaroid" data-mem="2">
-        <img src="assets/images/placeholder.jpg" alt="Memory 3">
+        <img src="assets/images/placeholder.jpg" alt="Memory 3" onerror="this.style.background='linear-gradient(135deg,#ff8ec4,#b8a9c9)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">Us Being Us 😄</p>
           <p class="polaroid-date">01 Jan 2025</p>
@@ -140,7 +141,7 @@
         <span class="polaroid-sticker">💕</span>
       </div>
       <div class="polaroid" data-mem="3">
-        <img src="assets/images/placeholder.jpg" alt="Memory 4">
+        <img src="assets/images/placeholder.jpg" alt="Memory 4" onerror="this.style.background='linear-gradient(135deg,#ffd700,#ff6b9d)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">Golden Hour ✨</p>
           <p class="polaroid-date">25 Dec 2024</p>
@@ -148,7 +149,7 @@
         <span class="polaroid-sticker">🐰</span>
       </div>
       <div class="polaroid" data-mem="4">
-        <img src="assets/images/placeholder.jpg" alt="Memory 5">
+        <img src="assets/images/placeholder.jpg" alt="Memory 5" onerror="this.style.background='linear-gradient(135deg,#ff6b9d,#ffd700)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">First Laugh 💖</p>
           <p class="polaroid-date">15 Nov 2024</p>
@@ -156,7 +157,7 @@
         <span class="polaroid-sticker">🎀</span>
       </div>
       <div class="polaroid" data-mem="5">
-        <img src="assets/images/placeholder.jpg" alt="Memory 6">
+        <img src="assets/images/placeholder.jpg" alt="Memory 6" onerror="this.style.background='linear-gradient(135deg,#cdb4db,#ff8ec4)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">Unexpected 🌷</p>
           <p class="polaroid-date">10 Oct 2024</p>
@@ -164,7 +165,7 @@
         <span class="polaroid-sticker">💕</span>
       </div>
       <div class="polaroid" data-mem="6">
-        <img src="assets/images/placeholder.jpg" alt="Memory 7">
+        <img src="assets/images/placeholder.jpg" alt="Memory 7" onerror="this.style.background='linear-gradient(135deg,#ff85a2,#cdb4db)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">Best Day Ever 🌸</p>
           <p class="polaroid-date">08 Aug 2024</p>
@@ -172,7 +173,7 @@
         <span class="polaroid-sticker">🐰</span>
       </div>
       <div class="polaroid" data-mem="7">
-        <img src="assets/images/placeholder.jpg" alt="Memory 8">
+        <img src="assets/images/placeholder.jpg" alt="Memory 8" onerror="this.style.background='linear-gradient(135deg,#b8a9c9,#ff6b9d)';this.removeAttribute('src')">
         <div class="polaroid-info">
           <p class="polaroid-title">Just You 💖</p>
           <p class="polaroid-date">01 May 2024</p>
@@ -192,7 +193,7 @@
         <h3 id="memModalTitle"></h3>
         <p class="mem-date" id="memModalDate"></p>
         <!-- REPLACE: Description -->
-        <p class="mem-desc" id="memModalDesc">Write your memory here...</p>
+        <p class="mem-desc" id="memModalDesc"></p>
       </div>
       <button class="memory-modal-close" id="memModalClose">Close</button>
     </div>
@@ -205,7 +206,8 @@
       <p class="secret-line1">Okay… I knew you would click 😄</p>
       <p class="secret-line2">I act like this a lot…<br>but I really care about you ❤️</p>
     </div>
-    <button class="btn btn-secondary" id="secretNext" style="display:none; margin-top:2rem;">Next →</button>
+    <!-- BUG FIX 2: Changed display:none to visibility:hidden to avoid Safari flex conflict -->
+    <button class="btn btn-secondary" id="secretNext" style="visibility:hidden; margin-top:2rem;">Next →</button>
   </section>
 
   <!-- ===== 6. FINAL SECTION ===== -->

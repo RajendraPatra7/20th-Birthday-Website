@@ -45,6 +45,7 @@ const wishes = [
 ];
 
 // ===== MEMORY DATA =====
+// REPLACE: Update title, date, desc for each memory
 const memoryData = [
   { title: "A Special Day 💖", date: "08 May 2025", desc: "Write your memory here..." },
   { title: "That One Evening 🌸", date: "14 Feb 2025", desc: "Write your memory here..." },
@@ -68,15 +69,16 @@ function goToSection(targetId) {
 
   // Initialize 3D cake when cake section becomes active
   if (targetId === 'cake' && !threeScene) {
-    setTimeout(initCandles, 200); // Wait for section to become visible
+    setTimeout(initCandles, 200);
   }
 }
 
 // ===== LOADING SCREEN =====
 function initLoading() {
+  // PRD says 2s — using 2000ms (was 2800, now corrected)
   setTimeout(() => {
     goToSection('landing');
-  }, 2800);
+  }, 2000);
 }
 
 // ===== MUSIC SYSTEM =====
@@ -126,7 +128,7 @@ enterBtn?.addEventListener('click', () => {
 let wishTimeout = null;
 let currentWishEl = null;
 let threeScene, threeCamera, threeRenderer, cakeGroup;
-let candleObjects = []; // { mesh, flame, blown, index }
+let candleObjects = [];
 let raycaster, mouse;
 let wishIndex = 0;
 
@@ -139,7 +141,6 @@ function initCandles() {
   const container = $('#cakeCanvasContainer');
   if (!container) return;
 
-  // Wait for container to have actual dimensions (section must be visible)
   const cw = container.clientWidth;
   const ch = container.clientHeight;
   if (cw === 0 || ch === 0) {
@@ -147,22 +148,18 @@ function initCandles() {
     return;
   }
 
-  // Scene
   threeScene = new THREE.Scene();
 
-  // Camera — framed to see full cake centered
   threeCamera = new THREE.PerspectiveCamera(45, cw / ch, 0.1, 100);
-  threeCamera.position.set(0, 3.5, 7);
+  threeCamera.position.set(0, 4.5, 12);
   threeCamera.lookAt(0, 1.2, 0);
 
-  // Renderer — fill the entire container
   threeRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   threeRenderer.setPixelRatio(window.devicePixelRatio);
   threeRenderer.setSize(cw, ch);
   threeRenderer.setClearColor(0x000000, 0);
   container.appendChild(threeRenderer.domElement);
 
-  // Lights
   const ambient = new THREE.AmbientLight(0xffffff, 0.5);
   threeScene.add(ambient);
 
@@ -174,35 +171,28 @@ function initCandles() {
   pinkLight.position.set(0, 4, 3);
   threeScene.add(pinkLight);
 
-  // Cake Group
   cakeGroup = new THREE.Group();
   threeScene.add(cakeGroup);
 
-  // Build 3-tier cake
   buildCake();
 
-  // Raycaster
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
 
-  // Events
   container.addEventListener('click', onCakeClick, false);
   container.addEventListener('touchstart', onCakeTouch, { passive: false });
   window.addEventListener('resize', onCakeResize);
 
-  // Start animation loop
   animateCake();
 }
 
 function buildCake() {
-  // ===== TIER DEFINITIONS =====
   const tiers = [
     { radius: 2.2, height: 1.0, y: 0.5,   color: 0xe87aaf, frosting: 0xffb6d3, candles: 10, candleRadius: 1.7 },
     { radius: 1.6, height: 0.9, y: 1.45,  color: 0xf08cc0, frosting: 0xffcce0, candles: 6,  candleRadius: 1.15 },
     { radius: 1.0, height: 0.8, y: 2.3,   color: 0xff8ec4, frosting: 0xffd6e8, candles: 4,  candleRadius: 0.6 }
   ];
 
-  // Plate
   const plateGeo = new THREE.CylinderGeometry(2.6, 2.7, 0.12, 32);
   const plateMat = new THREE.MeshPhongMaterial({ color: 0xfafafa, shininess: 80 });
   const plate = new THREE.Mesh(plateGeo, plateMat);
@@ -212,21 +202,18 @@ function buildCake() {
   let globalCandleIndex = 0;
 
   tiers.forEach((tier, tierIdx) => {
-    // Cake body
     const bodyGeo = new THREE.CylinderGeometry(tier.radius, tier.radius + 0.05, tier.height, 32);
     const bodyMat = new THREE.MeshPhongMaterial({ color: tier.color, shininess: 30 });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     body.position.y = tier.y;
     cakeGroup.add(body);
 
-    // Frosting ring on top
     const frostGeo = new THREE.CylinderGeometry(tier.radius + 0.02, tier.radius + 0.02, 0.08, 32);
     const frostMat = new THREE.MeshPhongMaterial({ color: tier.frosting, shininess: 60 });
     const frost = new THREE.Mesh(frostGeo, frostMat);
     frost.position.y = tier.y + tier.height / 2 + 0.04;
     cakeGroup.add(frost);
 
-    // Frosting drips (decorative)
     const dripCount = tierIdx === 0 ? 8 : tierIdx === 1 ? 6 : 4;
     for (let d = 0; d < dripCount; d++) {
       const angle = (d / dripCount) * Math.PI * 2 + Math.random() * 0.3;
@@ -241,7 +228,6 @@ function buildCake() {
       cakeGroup.add(dripMesh);
     }
 
-    // Decorative dots around tier
     const dotCount = tierIdx === 0 ? 16 : tierIdx === 1 ? 10 : 6;
     for (let d = 0; d < dotCount; d++) {
       const angle = (d / dotCount) * Math.PI * 2;
@@ -257,35 +243,28 @@ function buildCake() {
       cakeGroup.add(dot);
     }
 
-    // Candles on this tier
     const tierTopY = tier.y + tier.height / 2 + 0.08;
 
     for (let i = 0; i < tier.candles; i++) {
-      const angle = (i / tier.candles) * Math.PI * 2 + (tierIdx * 0.3); // offset per tier
-      const candleHeight = 0.5 + Math.random() * 0.15; // slight variation
+      const angle = (i / tier.candles) * Math.PI * 2 + (tierIdx * 0.3);
+      const candleHeight = 0.5 + Math.random() * 0.15;
       const x = Math.cos(angle) * tier.candleRadius + (Math.random() - 0.5) * 0.08;
       const z = Math.sin(angle) * tier.candleRadius + (Math.random() - 0.5) * 0.08;
 
-      // Candle body — thicker for visibility & click area
       const candleGeo = new THREE.CylinderGeometry(0.09, 0.10, candleHeight, 8);
       const candleMat = new THREE.MeshPhongMaterial({ color: 0xff6b9d, shininess: 40 });
       const candleMesh = new THREE.Mesh(candleGeo, candleMat);
       candleMesh.position.set(x, tierTopY + candleHeight / 2, z);
-
-      // Slight random rotation for natural look
       candleMesh.rotation.z = (Math.random() - 0.5) * 0.06;
       candleMesh.rotation.x = (Math.random() - 0.5) * 0.06;
-
       cakeGroup.add(candleMesh);
 
-      // Wick
       const wickGeo = new THREE.CylinderGeometry(0.01, 0.01, 0.08, 4);
       const wickMat = new THREE.MeshBasicMaterial({ color: 0x333333 });
       const wick = new THREE.Mesh(wickGeo, wickMat);
       wick.position.set(x, tierTopY + candleHeight + 0.04, z);
       cakeGroup.add(wick);
 
-      // Flame — larger for visibility
       const flameGeo = new THREE.SphereGeometry(0.10, 8, 8);
       flameGeo.scale(1, 1.6, 1);
       const flameMat = new THREE.MeshBasicMaterial({
@@ -297,14 +276,13 @@ function buildCake() {
       flame.position.set(x, tierTopY + candleHeight + 0.16, z);
       cakeGroup.add(flame);
 
-      // Invisible hitbox sphere for generous click detection
-      const hitGeo = new THREE.SphereGeometry(0.22, 8, 8);
+      const hitGeo = new THREE.SphereGeometry(0.5, 12, 12);
       const hitMat = new THREE.MeshBasicMaterial({ visible: false });
       const hitbox = new THREE.Mesh(hitGeo, hitMat);
       hitbox.position.set(x, tierTopY + candleHeight / 2 + 0.1, z);
+      hitbox.userData.isHitbox = true;
       cakeGroup.add(hitbox);
 
-      // Point light for each flame (subtle)
       const flameLight = new THREE.PointLight(0xffaa33, 0.3, 1.5);
       flameLight.position.copy(flame.position);
       cakeGroup.add(flameLight);
@@ -324,9 +302,8 @@ function buildCake() {
     }
   });
 
-  // Center cake — offset down slightly so it sits in visual center below the title
-  cakeGroup.position.set(0, -0.5, 0);
-  cakeGroup.scale.set(1.4, 1.4, 1.4);
+  cakeGroup.position.set(0, -1.8, 0);
+  cakeGroup.scale.set(0.95, 0.95, 0.95);
 }
 
 function onCakeClick(event) {
@@ -347,16 +324,24 @@ function onCakeTouch(event) {
 
 function castAndBlow() {
   raycaster.setFromCamera(mouse, threeCamera);
+  raycaster.params.Mesh = raycaster.params.Mesh || {};
+  raycaster.params.Mesh.threshold = 0.5;
+  raycaster.params.Points = raycaster.params.Points || {};
+  raycaster.params.Points.threshold = 0.25;
 
-  // Check all candle meshes, flames, AND hitboxes
   const clickables = candleObjects
     .filter(c => !c.blown)
     .flatMap(c => [c.mesh, c.flame, c.hitbox]);
 
-  const intersects = raycaster.intersectObjects(clickables);
+  const intersects = raycaster.intersectObjects(clickables, true);
   if (intersects.length > 0) {
     const hitObj = intersects[0].object;
-    const candle = candleObjects.find(c => c.mesh === hitObj || c.flame === hitObj || c.hitbox === hitObj);
+    const candle = candleObjects.find(c => 
+      c.mesh === hitObj || 
+      c.flame === hitObj || 
+      c.hitbox === hitObj || 
+      (hitObj.userData && hitObj.userData.isHitbox)
+    );
     if (candle && !candle.blown) {
       blowCandle3D(candle);
     }
@@ -368,29 +353,24 @@ function blowCandle3D(candle) {
   candlesBlown++;
   candleCount.textContent = candlesBlown;
 
-  // Hide flame
   candle.flame.visible = false;
   candle.flameLight.intensity = 0;
+  candle.mesh.material = new THREE.MeshPhongMaterial({ color: 0x666666, shininess: 10, opacity: 0.6, transparent: true });
 
-  // Grey out candle body
-  candle.mesh.material = new THREE.MeshPhongMaterial({ color: 0x666666, shininess: 10 });
-  candle.mesh.material.opacity = 0.6;
-  candle.mesh.material.transparent = true;
-
-  // Play blow sound
   playBlowSound();
 
-  // Show wish message
   showWishMessage(wishes[wishIndex % wishes.length]);
   wishIndex++;
 
-  // Small confetti every 5
   if (candlesBlown % 5 === 0 && candlesBlown < 20) {
     spawnConfetti(20);
   }
 
-  // All 20 blown
   if (candlesBlown === 20) {
+    // Hide skip button once all candles are blown
+    const skipBtn = $('#cakeSkipBtn');
+    if (skipBtn) skipBtn.style.display = 'none';
+
     setTimeout(() => {
       spawnConfetti(80);
       clearWishPopup();
@@ -407,7 +387,7 @@ function onCakeResize() {
   const container = $('#cakeCanvasContainer');
   if (!container || !threeCamera || !threeRenderer) return;
   const cw = container.clientWidth || window.innerWidth;
-  const ch = container.clientHeight || window.innerHeight;
+  const ch = container.clientHeight || window.innerHeight * 0.65;
   threeCamera.aspect = cw / ch;
   threeCamera.updateProjectionMatrix();
   threeRenderer.setSize(cw, ch);
@@ -418,10 +398,8 @@ function animateCake() {
 
   if (!cakeGroup || !threeRenderer || !threeScene || !threeCamera) return;
 
-  // Slow rotation
   cakeGroup.rotation.y += 0.003;
 
-  // Flame flicker animation
   const time = Date.now() * 0.005;
   candleObjects.forEach((c, i) => {
     if (!c.blown && c.flame.visible) {
@@ -482,46 +460,50 @@ function clearWishPopup() {
 function playBlowSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    
-    // White noise-ish blow sound
     const bufferSize = ctx.sampleRate * 0.3;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
       data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.08));
     }
-    
+
     const source = ctx.createBufferSource();
     source.buffer = buffer;
-    
+
     const filter = ctx.createBiquadFilter();
     filter.type = 'lowpass';
     filter.frequency.value = 800;
-    
+
     const gainNode = ctx.createGain();
     gainNode.gain.setValueAtTime(0.15, ctx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-    
+
     source.connect(filter);
     filter.connect(gainNode);
     gainNode.connect(ctx.destination);
     source.start();
-    
+
     setTimeout(() => ctx.close(), 500);
   } catch (e) {
     // Silent fail
   }
 }
 
+// ===== BUG FIX 1: Cake Skip Button =====
+// Gives user a fallback if they can't blow all 20 candles
+$('#cakeSkipBtn')?.addEventListener('click', () => {
+  goToSection('wishes');
+});
+
 // ===== WISH CARDS (Tap to enlarge) =====
+// BUG FIX 4: Guard against opening modal when section is not active
 $$('.wish-card').forEach(card => {
   card.addEventListener('click', () => {
+    if (currentSection !== 'wishes') return;
     const emoji = card.querySelector('.wish-emoji').textContent;
     const text = card.querySelector('.wish-text').textContent;
     const label = card.querySelector('.wish-label').textContent;
-    
+
     $('#modalEmoji').textContent = emoji;
     $('#modalText').textContent = text;
     $('#modalLabel').textContent = label;
@@ -544,14 +526,21 @@ $('#wishesNext')?.addEventListener('click', () => {
 });
 
 // ===== MEMORY CARDS (Tap to zoom) =====
+// BUG FIX 4: Guard against opening modal when section is not active
 $$('.polaroid').forEach(card => {
   card.addEventListener('click', () => {
+    if (currentSection !== 'memories') return;
     const idx = parseInt(card.dataset.mem);
     const data = memoryData[idx];
-    const img = card.querySelector('img').src;
-    
-    $('#memModalImg').src = img;
+
+    // Get image src — if broken (onerror fired), img has no src
+    const imgEl = card.querySelector('img');
+    const imgSrc = imgEl.getAttribute('src') || '';
+
+    $('#memModalImg').src = imgSrc;
     $('#memModalImg').alt = data.title;
+    // Mirror the same gradient background if image is broken
+    $('#memModalImg').style.background = imgEl.style.background || '';
     $('#memModalTitle').textContent = data.title;
     $('#memModalDate').textContent = data.date;
     $('#memModalDesc').textContent = data.desc;
@@ -580,7 +569,9 @@ $('#secretBtn')?.addEventListener('click', function() {
   reveal.classList.add('show');
 
   setTimeout(() => {
-    $('#secretNext').style.display = 'inline-flex';
+    // BUG FIX 2: Use visibility instead of display to avoid Safari flex conflicts
+    const nextBtn = $('#secretNext');
+    nextBtn.style.visibility = 'visible';
   }, 2500);
 });
 
@@ -593,7 +584,15 @@ $('#secretNext')?.addEventListener('click', () => {
 $('#finalBtn')?.addEventListener('click', function() {
   this.style.display = 'none';
   const msg = $('#finalLastMsg');
-  msg.classList.add('show');
+
+  // BUG FIX 3: Wrap in requestAnimationFrame so the CSS transition fires
+  // reliably on all mobile browsers (Safari, Chrome iOS, etc.)
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      msg.classList.add('show');
+    });
+  });
+
   spawnConfetti(60);
 });
 
@@ -601,7 +600,7 @@ $('#finalBtn')?.addEventListener('click', function() {
 function spawnFloatingHearts() {
   const container = $('#floatingHearts');
   const hearts = ['💖', '💕', '💗', '🩷', '💜', '🤍'];
-  
+
   for (let i = 0; i < 15; i++) {
     const heart = document.createElement('span');
     heart.className = 'heart';
@@ -618,7 +617,7 @@ function spawnFloatingHearts() {
 function spawnFloatingStars() {
   const container = $('#floatingStars');
   container.innerHTML = '';
-  
+
   for (let i = 0; i < 25; i++) {
     const star = document.createElement('span');
     star.className = 'star';
@@ -635,7 +634,7 @@ function spawnFloatingStars() {
 // ===== CONFETTI =====
 function spawnConfetti(count = 60) {
   const colors = ['#ff6b9d', '#cdb4db', '#ffd700', '#ff85a2', '#b8a9c9', '#ffc2d1', '#fff'];
-  
+
   for (let i = 0; i < count; i++) {
     const piece = document.createElement('div');
     piece.className = 'confetti-piece';
