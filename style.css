@@ -169,12 +169,46 @@ body {
 
 /* ===== CAKE SECTION ===== */
 #cake {
-  gap: 1rem;
+  gap: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 3D Canvas fills the entire section */
+.cake-canvas-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cake-canvas-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* HTML Overlay at the top */
+.cake-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.2rem 1rem 0;
+}
+
+.cake-overlay > * {
+  pointer-events: none;
 }
 
 #cake .cake-title {
   font-family: 'Dancing Script', cursive;
-  font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
   color: var(--pink);
   text-align: center;
   text-shadow: 0 0 25px var(--pink-glow);
@@ -182,17 +216,17 @@ body {
 }
 
 .cake-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: var(--lavender);
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 /* Candle Counter */
 .candle-counter {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-dim);
-  margin-bottom: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 .candle-counter span {
@@ -200,137 +234,55 @@ body {
   font-weight: 700;
 }
 
-/* Candle Grid */
-.candle-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.8rem;
-  max-width: 320px;
-  width: 100%;
-  padding: 1.5rem;
-  background: var(--bg-card);
-  border-radius: 20px;
-  border: 1px solid rgba(205, 180, 219, 0.15);
-  backdrop-filter: blur(10px);
-}
-
-/* Individual Candle */
-.candle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  position: relative;
-}
-
-.candle:active { transform: scale(0.9); }
-
-.candle-body {
-  width: 18px;
-  height: 40px;
-  background: linear-gradient(to bottom, var(--pink), #e855a0);
-  border-radius: 3px 3px 5px 5px;
-  position: relative;
-}
-
-.candle-body::before {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 8px;
-  background: #333;
-}
-
-.candle-flame {
-  width: 12px;
-  height: 18px;
-  background: radial-gradient(ellipse, var(--gold), #ff8c00, transparent);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: flicker 0.4s infinite alternate;
-  filter: blur(0.5px);
-  transition: opacity 0.5s ease;
-}
-
-.candle.blown .candle-flame {
-  opacity: 0;
-  animation: none;
-}
-
-.candle.blown .candle-body {
-  background: linear-gradient(to bottom, #666, #555);
-  opacity: 0.5;
-}
-
-/* Smoke */
-.candle-smoke {
-  position: absolute;
-  top: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: rgba(200, 200, 200, 0.4);
-  border-radius: 50%;
-  opacity: 0;
-}
-
-.candle.blown .candle-smoke {
-  animation: smokeRise 1s forwards;
-}
-
-@keyframes flicker {
-  0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
-  100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
-}
-
-@keyframes smokeRise {
-  0% { opacity: 0.6; transform: translateX(-50%) translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(2); }
-}
-
-/* Wish Message Popup */
+/* ===== WISH POPUP (Smooth single message) ===== */
 .wish-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   z-index: 50;
   text-align: center;
-  padding: 1.5rem 2rem;
+  min-height: 2.5rem;
   max-width: 320px;
   width: 90%;
   pointer-events: none;
+  margin-top: 0.4rem;
 }
 
-.wish-popup p {
+.wish-popup .wish-msg {
   font-family: 'Dancing Script', cursive;
-  font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
   color: var(--pink);
-  text-shadow: 0 0 20px var(--pink-glow);
+  text-shadow: 0 0 20px var(--pink-glow), 0 0 40px rgba(255, 107, 157, 0.15);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
   opacity: 0;
-  transform: translateY(20px);
-  animation: wishFloat 2.5s forwards;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  animation: none;
 }
 
-@keyframes wishFloat {
-  0% { opacity: 0; transform: translateY(20px); }
-  15% { opacity: 1; transform: translateY(0); }
-  75% { opacity: 1; transform: translateY(-5px); }
-  100% { opacity: 0; transform: translateY(-15px); }
+.wish-popup .wish-msg.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: wishGlow 2s ease-in-out infinite;
 }
 
-/* Final candle message */
+.wish-popup .wish-msg.fading {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes wishGlow {
+  0%, 100% { text-shadow: 0 0 20px var(--pink-glow), 0 0 40px rgba(255, 107, 157, 0.15); }
+  50% { text-shadow: 0 0 30px var(--pink-glow), 0 0 60px rgba(255, 107, 157, 0.25); }
+}
+
+/* ===== FINAL CANDLE MESSAGE ===== */
 .final-wish-msg {
+  position: relative;
+  z-index: 20;
   text-align: center;
-  margin-top: 1rem;
 }
 
 .final-wish-msg p {
@@ -778,14 +730,6 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (min-width: 480px) {
-  .candle-grid {
-    max-width: 380px;
-    gap: 1rem;
-  }
-  .candle-body {
-    width: 22px;
-    height: 48px;
-  }
   .memory-grid {
     max-width: 450px;
   }
@@ -800,3 +744,5 @@ body {
     max-width: 500px;
   }
 }
+
+

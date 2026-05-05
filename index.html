@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 </head>
 <body>
 
@@ -24,7 +25,7 @@
   <!-- Audio -->
   <audio id="bgMusic" loop preload="auto">
     <!-- REPLACE: Song -->
-    <source src="assets/music/perfect-instrumental.mp3" type="audio/mpeg">
+    <source src="assets/music/Until I Found You ( instrumental).mp3" type="audio/mpeg">
   </audio>
 
   <!-- ===== 0. LOADING SCREEN ===== -->
@@ -47,17 +48,19 @@
 
   <!-- ===== 2. CAKE SECTION ===== -->
   <section class="section" id="cake">
-    <!-- REPLACE: Name -->
-    <h2 class="cake-title">Happy 20th Birthday 🎂<br>Miss Rachayeta Biswas 💖</h2>
-    <p class="cake-subtitle">Tap each candle to blow it out 🕯️</p>
-    <p class="candle-counter"><span id="candleCount">0</span> / 20 candles</p>
+    <!-- 3D Canvas -->
+    <div class="cake-canvas-container" id="cakeCanvasContainer"></div>
 
-    <div class="candle-grid" id="candleGrid">
-      <!-- 20 candles rendered by JS -->
+    <!-- HTML Overlay -->
+    <div class="cake-overlay">
+      <!-- REPLACE: Name -->
+      <h2 class="cake-title">Happy 20th Birthday 🎂<br>Miss Rachayeta Biswas 💖</h2>
+      <p class="cake-subtitle">Tap each candle to blow it out 🕯️</p>
+      <p class="candle-counter"><span id="candleCount">0</span> / 20 candles</p>
+
+      <!-- Wish popup -->
+      <div class="wish-popup" id="wishPopup"></div>
     </div>
-
-    <!-- Wish popup container -->
-    <div class="wish-popup" id="wishPopup"></div>
 
     <!-- Final message (shown after all 20) -->
     <div class="final-wish-msg" id="finalWishMsg" style="display:none;">
