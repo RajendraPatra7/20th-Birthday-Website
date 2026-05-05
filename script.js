@@ -287,6 +287,11 @@ function buildCake() {
       flameLight.position.copy(flame.position);
       cakeGroup.add(flameLight);
 
+      // Tag objects with index
+      candleMesh.userData.candleIndex = globalCandleIndex;
+      flame.userData.candleIndex = globalCandleIndex;
+      hitbox.userData.candleIndex = globalCandleIndex;
+
       candleObjects.push({
         mesh: candleMesh,
         flame: flame,
@@ -336,12 +341,11 @@ function castAndBlow() {
   const intersects = raycaster.intersectObjects(clickables, true);
   if (intersects.length > 0) {
     const hitObj = intersects[0].object;
-    const candle = candleObjects.find(c => 
-      c.mesh === hitObj || 
-      c.flame === hitObj || 
-      c.hitbox === hitObj || 
-      (hitObj.userData && hitObj.userData.isHitbox)
-    );
+    let candle = null;
+
+    if (hitObj.userData && hitObj.userData.candleIndex !== undefined) {
+      candle = candleObjects.find(c => c.index === hitObj.userData.candleIndex);
+    }
     if (candle && !candle.blown) {
       blowCandle3D(candle);
     }
