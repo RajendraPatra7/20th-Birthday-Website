@@ -93,6 +93,8 @@ body {
   line-height: 1.4;
   margin-bottom: 1.5rem;
   text-shadow: 0 0 25px var(--pink-glow);
+  opacity: 0;
+  animation: fadeInUp 1s 0.3s forwards;
 }
 
 #landing .landing-subtitle {
@@ -100,6 +102,13 @@ body {
   color: var(--lavender);
   margin-bottom: 2.5rem;
   line-height: 1.6;
+  opacity: 0;
+  animation: fadeInUp 1s 1s forwards;
+}
+
+#landing .btn-primary {
+  opacity: 0;
+  animation: fadeInUp 1s 1.7s forwards;
 }
 
 /* ===== BUTTONS ===== */
@@ -255,11 +264,45 @@ body {
 
 #cake .cake-title {
   font-family: 'Dancing Script', cursive;
-  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
-  color: var(--pink);
+  font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+  background: linear-gradient(135deg, var(--pink), var(--gold), var(--pink), var(--lavender));
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: cakeTitleGradient 4s ease infinite, cakeTitleGlow 2s ease-in-out infinite;
   text-align: center;
-  text-shadow: 0 0 25px var(--pink-glow);
   line-height: 1.4;
+  position: relative;
+  filter: drop-shadow(0 0 8px var(--pink-glow));
+}
+
+#cake .cake-title::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  animation: cakeTitleShimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cakeTitleGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes cakeTitleGlow {
+  0%, 100% { filter: drop-shadow(0 0 8px var(--pink-glow)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.15)); }
+  50% { filter: drop-shadow(0 0 15px var(--pink-glow)) drop-shadow(0 0 35px rgba(255, 215, 0, 0.3)); }
+}
+
+@keyframes cakeTitleShimmer {
+  0% { left: -100%; }
+  50%, 100% { left: 150%; }
 }
 
 .cake-subtitle {
@@ -285,43 +328,62 @@ body {
   position: relative;
   z-index: 50;
   text-align: center;
-  min-height: 2.5rem;
-  max-width: 320px;
-  width: 90%;
+  min-height: 4rem;
+  max-width: 360px;
+  width: 92%;
   pointer-events: none;
-  margin-top: 0.4rem;
+  margin-top: 0.6rem;
 }
 
 .wish-popup .wish-msg {
   font-family: 'Dancing Script', cursive;
-  font-size: clamp(1.1rem, 4vw, 1.4rem);
-  color: var(--pink);
-  text-shadow: 0 0 20px var(--pink-glow), 0 0 40px rgba(255, 107, 157, 0.15);
+  font-size: clamp(1.4rem, 5.5vw, 1.9rem);
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--pink), var(--gold), var(--lavender));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 50%;
   top: 0;
+  width: max-content;
+  max-width: 100%;
+  padding: 0.6rem 1.4rem;
+  border-radius: 20px;
+  background-color: rgba(30, 25, 50, 0.7);
+  border: 1px solid rgba(255, 107, 157, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateX(-50%) translateY(15px) scale(0.8);
+  transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation: none;
+  filter: drop-shadow(0 0 12px var(--pink-glow));
 }
 
 .wish-popup .wish-msg.visible {
   opacity: 1;
-  transform: translateY(0);
-  animation: wishGlow 2s ease-in-out infinite;
+  transform: translateX(-50%) translateY(0) scale(1);
+  animation: wishGlow 2s ease-in-out infinite, wishGradientShift 3s ease infinite;
 }
 
 .wish-popup .wish-msg.fading {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateX(-50%) translateY(-12px) scale(0.9);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 @keyframes wishGlow {
-  0%, 100% { text-shadow: 0 0 20px var(--pink-glow), 0 0 40px rgba(255, 107, 157, 0.15); }
-  50% { text-shadow: 0 0 30px var(--pink-glow), 0 0 60px rgba(255, 107, 157, 0.25); }
+  0%, 100% { filter: drop-shadow(0 0 12px var(--pink-glow)) drop-shadow(0 0 25px rgba(255, 215, 0, 0.1)); }
+  50% { filter: drop-shadow(0 0 20px var(--pink-glow)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.25)); }
+}
+
+@keyframes wishGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ===== FINAL CANDLE MESSAGE ===== */

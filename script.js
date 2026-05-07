@@ -75,10 +75,10 @@ function goToSection(targetId) {
 
 // ===== LOADING SCREEN =====
 function initLoading() {
-  // PRD says 2s — using 2000ms (was 2800, now corrected)
+  // Show loading screen for 5s so both name + subtitle are fully readable
   setTimeout(() => {
     goToSection('landing');
-  }, 2000);
+  }, 5000);
 }
 
 // ===== MUSIC SYSTEM =====
