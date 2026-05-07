@@ -526,6 +526,32 @@ $('#cakeSkipBtn')?.addEventListener('click', () => {
   goToSection('wishes');
 });
 
+// ===== SECRET LONG-PRESS SKIP (Dev/Testing) =====
+// Hold the cake title for 2s to skip to wishes
+(() => {
+  const cakeTitle = document.querySelector('#cake .cake-title');
+  if (!cakeTitle) return;
+  let holdTimer = null;
+
+  const startHold = (e) => {
+    e.preventDefault();
+    holdTimer = setTimeout(() => {
+      goToSection('wishes');
+    }, 2000);
+  };
+
+  const cancelHold = () => {
+    if (holdTimer) { clearTimeout(holdTimer); holdTimer = null; }
+  };
+
+  cakeTitle.addEventListener('touchstart', startHold, { passive: false });
+  cakeTitle.addEventListener('touchend', cancelHold);
+  cakeTitle.addEventListener('touchcancel', cancelHold);
+  cakeTitle.addEventListener('mousedown', startHold);
+  cakeTitle.addEventListener('mouseup', cancelHold);
+  cakeTitle.addEventListener('mouseleave', cancelHold);
+})();
+
 // ===== WISH CARDS (Tap to enlarge) =====
 // BUG FIX 4: Guard against opening modal when section is not active
 $$('.wish-card').forEach(card => {
