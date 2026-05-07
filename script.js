@@ -47,7 +47,7 @@ const wishes = [
 // ===== MEMORY DATA =====
 // REPLACE: Update title, date, desc for each memory
 const memoryData = [
-  { title: "A Special Day 💖", date: "08 May 2025", desc: "Write your memory here..." },
+  { title: "A Special Day 💖", date: "08 May 2025", desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam, dolorum tempora labore quas ea aperiam ipsa consectetur placeat deserunt harum vero beatae nihil ullam. Pariatur id ratione velit nesciun. Cum earum laboriosam iste sit suscipit iusto laudantium consequatur, mollitia error sapiente fugit assumenda ipsum? Esse amet delectus aut consectetur corporis molestiae atque. Id labore repudiandae veritatis consectetur quae quos." },
   { title: "That One Evening 🌸", date: "14 Feb 2025", desc: "Write your memory here..." },
   { title: "Us Being Us 😄", date: "01 Jan 2025", desc: "Write your memory here..." },
   { title: "Golden Hour ✨", date: "25 Dec 2024", desc: "Write your memory here..." },
@@ -619,18 +619,79 @@ $('#memoriesNext')?.addEventListener('click', () => {
   goToSection('secret');
 });
 
-// ===== SECRET SECTION =====
-$('#secretBtn')?.addEventListener('click', function() {
-  this.style.display = 'none';
-  const reveal = $('#secretReveal');
-  reveal.classList.add('show');
+// ===== SECRET SECTION (Dodging Button) =====
+(() => {
+  const secretBtn = $('#secretBtn');
+  if (!secretBtn) return;
 
-  setTimeout(() => {
-    // BUG FIX 2: Use visibility instead of display to avoid Safari flex conflicts
-    const nextBtn = $('#secretNext');
-    nextBtn.style.visibility = 'visible';
-  }, 2500);
-});
+  let dodgeCount = 0;
+  const dodgeMessages = [
+    "shunis na bol suyor ?? 😒🐖",
+    "Are baawa 😠",
+    "Parbi na tap korte kiddo 🤭🙈",
+    "Cry baby 🫪🫵🏻"
+  ];
+
+  // Fixed corner positions using viewport: top-right, top-left, bottom-right, bottom-left
+  const getCornerPos = (index) => {
+    const vW = window.innerWidth;
+    const vH = window.innerHeight;
+    const bW = secretBtn.offsetWidth;
+    const bH = secretBtn.offsetHeight;
+    const pad = 20;
+
+    const positions = [
+      { left: vW - bW - pad, top: pad },           // top-right
+      { left: pad, top: pad },                       // top-left
+      { left: vW - bW - pad, top: vH - bH - pad }, // bottom-right
+      { left: pad, top: vH - bH - pad }             // bottom-left
+    ];
+    return positions[index];
+  };
+
+  const handleDodge = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (dodgeCount < 4) {
+      // Show teasing message
+      secretBtn.textContent = dodgeMessages[dodgeCount];
+
+      // Move to corner
+      const pos = getCornerPos(dodgeCount);
+      secretBtn.classList.add('dodging');
+      secretBtn.style.left = pos.left + 'px';
+      secretBtn.style.top = pos.top + 'px';
+
+      dodgeCount++;
+
+      if (dodgeCount >= 4) {
+        // After 4th dodge, bring back to center
+        setTimeout(() => {
+          secretBtn.classList.remove('dodging');
+          secretBtn.classList.add('centered');
+          secretBtn.style.left = '';
+          secretBtn.style.top = '';
+          secretBtn.textContent = "Okay fine… tap me 🥺💖";
+
+          // Swap handler to final click
+          secretBtn.removeEventListener('click', handleDodge);
+          secretBtn.addEventListener('click', function finalClick() {
+            this.style.display = 'none';
+            const reveal = $('#secretReveal');
+            reveal.classList.add('show');
+            setTimeout(() => {
+              const nextBtn = $('#secretNext');
+              nextBtn.style.visibility = 'visible';
+            }, 2500);
+          });
+        }, 800);
+      }
+    }
+  };
+
+  secretBtn.addEventListener('click', handleDodge);
+})();
 
 $('#secretNext')?.addEventListener('click', () => {
   goToSection('final');
