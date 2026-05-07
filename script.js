@@ -420,14 +420,17 @@ function animateCake() {
   threeRenderer.render(threeScene, threeCamera);
 }
 
-// ===== WISH MESSAGE SYSTEM =====
+// ===== WISH MESSAGE SYSTEM (Dream Burst) =====
 function showWishMessage(msg) {
   if (currentWishEl) {
     currentWishEl.classList.remove('visible');
     currentWishEl.classList.add('fading');
     const oldEl = currentWishEl;
-    setTimeout(() => oldEl.remove(), 300);
+    setTimeout(() => oldEl.remove(), 400);
   }
+
+  // Clear old sparkles
+  wishPopup.querySelectorAll('.wish-sparkle').forEach(s => s.remove());
 
   if (wishTimeout) clearTimeout(wishTimeout);
 
@@ -435,6 +438,9 @@ function showWishMessage(msg) {
   el.className = 'wish-msg';
   el.textContent = msg;
   wishPopup.appendChild(el);
+
+  // Spawn sparkle particles around the message
+  spawnWishSparkles(wishPopup, 12);
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -448,10 +454,31 @@ function showWishMessage(msg) {
     if (currentWishEl === el) {
       el.classList.remove('visible');
       el.classList.add('fading');
-      setTimeout(() => el.remove(), 400);
+      setTimeout(() => el.remove(), 500);
       currentWishEl = null;
     }
-  }, 2000);
+  }, 2500);
+}
+
+function spawnWishSparkles(container, count) {
+  const colors = ['#ff6b9d', '#ffd700', '#cdb4db', '#fff', '#ff85a2', '#ffc2d1'];
+  for (let i = 0; i < count; i++) {
+    const sparkle = document.createElement('span');
+    sparkle.className = 'wish-sparkle';
+    const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+    const dist = 60 + Math.random() * 80;
+    sparkle.style.setProperty('--sx', `${Math.cos(angle) * dist}px`);
+    sparkle.style.setProperty('--sy', `${Math.sin(angle) * dist}px`);
+    sparkle.style.left = '50%';
+    sparkle.style.top = '50%';
+    sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    sparkle.style.width = (4 + Math.random() * 5) + 'px';
+    sparkle.style.height = sparkle.style.width;
+    sparkle.style.animationDelay = (Math.random() * 0.2) + 's';
+    sparkle.style.boxShadow = `0 0 6px ${sparkle.style.backgroundColor}`;
+    container.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 1000);
+  }
 }
 
 function clearWishPopup() {
