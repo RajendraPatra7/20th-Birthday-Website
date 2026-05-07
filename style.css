@@ -585,19 +585,43 @@ body {
 
 .wish-modal {
   background: var(--bg-card);
-  border: 1px solid rgba(205, 180, 219, 0.2);
+  border: 1px solid rgba(255, 107, 157, 0.3);
   border-radius: 20px;
   padding: 2rem;
   max-width: 360px;
   width: 100%;
   text-align: center;
   transform: scale(0.9);
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow:
+    0 0 20px rgba(255, 107, 157, 0.3),
+    0 0 50px rgba(255, 107, 157, 0.15),
+    0 0 100px rgba(255, 107, 157, 0.08),
+    0 0 150px rgba(255, 215, 0, 0.05);
 }
 
 .wish-modal-overlay.active .wish-modal {
   transform: scale(1);
+  animation: modalGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes modalGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(255, 107, 157, 0.3),
+      0 0 50px rgba(255, 107, 157, 0.15),
+      0 0 100px rgba(255, 107, 157, 0.08),
+      0 0 150px rgba(255, 215, 0, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(255, 107, 157, 0.45),
+      0 0 70px rgba(255, 107, 157, 0.25),
+      0 0 120px rgba(255, 107, 157, 0.12),
+      0 0 180px rgba(255, 215, 0, 0.1);
+  }
 }
 
 .wish-modal .wish-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
