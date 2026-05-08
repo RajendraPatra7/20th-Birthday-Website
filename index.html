@@ -1,238 +1,369 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy 20th Birthday Rachayeta 💖</title>
-  <meta name="description" content="A special birthday surprise for Miss Rachayeta Biswas on her 20th birthday ❤️">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Happy 20th Birthday Rachayeta 💖</title>
+    <meta
+      name="description"
+      content="A special birthday surprise for Miss Rachayeta Biswas on her 20th birthday ❤️"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <!-- Floating Hearts (Background) -->
+    <div class="floating-hearts" id="floatingHearts"></div>
 
-  <!-- Floating Hearts (Background) -->
-  <div class="floating-hearts" id="floatingHearts"></div>
+    <!-- Floating Stars (Final section) -->
+    <div class="floating-stars" id="floatingStars"></div>
 
-  <!-- Floating Stars (Final section) -->
-  <div class="floating-stars" id="floatingStars"></div>
+    <!-- Music Toggle -->
+    <button id="musicToggle" aria-label="Toggle music">🔊</button>
 
-  <!-- Music Toggle -->
-  <button id="musicToggle" aria-label="Toggle music">🔊</button>
+    <!-- Audio -->
+    <audio id="bgMusic" loop preload="auto">
+      <source
+        src="assets/music/Until I Found You ( instrumental).mp3"
+        type="audio/mpeg"
+      />
+    </audio>
 
-  <!-- Audio -->
-  <audio id="bgMusic" loop preload="auto">
-    <source src="assets/music/Until I Found You ( instrumental).mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- ===== 0. LOADING SCREEN ===== -->
-  <section class="section active" id="loading">
-    <!-- REPLACE: Name -->
-    <h1 class="loader-name">Mrs. Patra 💕</h1>
-    <!-- REPLACE: Small Text — ADD LATER -->
-    <p class="loader-sub">20 years of someone very special...</p>
-  </section>
-
-  <!-- ===== 1. LANDING PAGE ===== -->
-  <section class="section" id="landing">
-    <div class="landing-content">
+    <!-- ===== 0. LOADING SCREEN ===== -->
+    <section class="section active" id="loading">
       <!-- REPLACE: Name -->
-      <h2 class="landing-title">Hey Miss Cutie ❤️<br>I made something for you...</h2>
-      <p class="landing-subtitle">Niche tap koru to begin your birthday surprise ✨</p>
-      <button class="btn btn-primary" id="enterBtn">Enter ✨</button>
-    </div>
-  </section>
+      <h1 class="loader-name">Mrs. Patra 💕</h1>
+      <!-- REPLACE: Small Text — ADD LATER -->
+      <p class="loader-sub">20 years of someone very special...</p>
+    </section>
 
-  <!-- ===== 2. CAKE SECTION ===== -->
-  <section class="section" id="cake">
-    <!-- 3D Canvas -->
-    <div class="cake-container">
-      <div class="cake-canvas-container" id="cakeCanvasContainer"></div>
-    </div>
-
-    <!-- HTML Overlay -->
-    <div class="cake-overlay">
-      <!-- REPLACE: Name -->
-      <h2 class="cake-title">Happy 20th Birthday 🎂<br>Miss Rachayeta Patra 💖</h2>
-      <p class="cake-subtitle">Tap each candle to blow it out 🕯️</p>
-      <p class="candle-counter"><span id="candleCount">0</span> / 20 candles</p>
-
-      <!-- Final message (shown after all 20) -->
-      <div class="final-wish-msg" id="finalWishMsg" style="display:none;">
-        <p>Now… your wish has been made cutie ✨</p>
-      </div>
-    </div>
-
-    <!-- Wish popup (outside overlay for full-screen dream burst) -->
-    <div class="wish-popup" id="wishPopup"></div>
-  </section>
-
-  <!-- ===== 3. WISHES SECTION ===== -->
-  <section class="section" id="wishes">
-    <h2 class="section-title">Birthday Wishes 💌</h2>
-
-    <div class="wish-cards">
-      <!-- REPLACE: Wishes -->
-      <div class="wish-card" data-wish="0">
-        <span class="wish-emoji">💖</span>
-        <p class="wish-text">Baby i just want to say that , </p>
-        <p class="wish-label">Cute</p>
-      </div>
-      <div class="wish-card" data-wish="1">
-        <span class="wish-emoji">🌸</span>
-        <p class="wish-text">You are special because...
-          
+    <!-- ===== 1. LANDING PAGE ===== -->
+    <section class="section" id="landing">
+      <div class="landing-content">
+        <!-- REPLACE: Name -->
+        <h2 class="landing-title">
+          Hey Miss Cutie ❤️<br />I made something for you...
+        </h2>
+        <p class="landing-subtitle">
+          Niche tap koru to begin your birthday surprise ✨
         </p>
-        <p class="wish-label">Appreciation</p>
+        <button class="btn btn-primary" id="enterBtn">Enter ✨</button>
       </div>
-      <div class="wish-card" data-wish="2">
-        <span class="wish-emoji">✨</span>
-        <p class="wish-text">I hope this year brings you... Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus ad alias, perspiciatis asperiores soluta vel ipsam error. Autem repellat perspiciatis tempore sed ut ullam non error, aperiam voluptatum, molestias facere?
-        Maiores minima, nisi porro nesciunt nostrum ab amet dignissimos, inventore iure repudiandae quas molestiae fugit eveniet vel! Enim est animi eius, consectetur quas praesentium soluta eligendi quam quibusdam maxime alias.</p>
-        <p class="wish-label">Emotional</p>
+    </section>
+
+    <!-- ===== 2. CAKE SECTION ===== -->
+    <section class="section" id="cake">
+      <!-- 3D Canvas -->
+      <div class="cake-container">
+        <div class="cake-canvas-container" id="cakeCanvasContainer"></div>
       </div>
-      <div class="wish-card" data-wish="3">
-        <span class="wish-emoji">💕</span>
-        <p class="wish-text">Something meaningful...
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam, dolorum tempora labore quas ea aperiam ipsa consectetur placeat deserunt harum vero beatae nihil ullam. Pariatur id ratione velit nesciunt? A.
-          Cum earum laboriosam iste sit suscipit iusto laudantium consequatur, mollitia error sapiente fugit assumenda ipsum? Esse amet delectus aut consectetur corporis molestiae atque. Id labore repudiandae veritatis consectetur quae quos.
+
+      <!-- HTML Overlay -->
+      <div class="cake-overlay">
+        <!-- REPLACE: Name -->
+        <h2 class="cake-title">
+          Happy 20th Birthday 🎂<br />Miss Rachayeta Patra 💖
+        </h2>
+        <p class="cake-subtitle">Tap each candle to blow it out 🕯️</p>
+        <p class="candle-counter">
+          <span id="candleCount">0</span> / 20 candles
         </p>
-        <p class="wish-label">Deep</p>
+
+        <!-- Final message (shown after all 20) -->
+        <div class="final-wish-msg" id="finalWishMsg" style="display: none">
+          <p>Now… your wish has been made cutie ✨</p>
+        </div>
+      </div>
+
+      <!-- Wish popup (outside overlay for full-screen dream burst) -->
+      <div class="wish-popup" id="wishPopup"></div>
+    </section>
+
+    <!-- ===== 3. WISHES SECTION ===== -->
+    <section class="section" id="wishes">
+      <h2 class="section-title">Birthday Wishes 💌</h2>
+
+      <div class="wish-cards">
+        <!-- REPLACE: Wishes -->
+        <div class="wish-card" data-wish="0">
+          <span class="wish-emoji">💖</span>
+          <p class="wish-text">
+            Baby I just want to say that , u are very special to me ❤️ , and
+            always will be , cause u are the one who make me feel special 🤧💕 ,
+            my pyaara puchku baby 🌚🫶🏻 tarmodhye I mean moreover tui din din
+            aroh khubsurat hoye jachis kintu I must say 👀♥️ ( just like a
+            bonosuyor 🐖🎀 ) . Tar modhye tor eii eyeees uffff 👀😭, jano amake
+            kamre kheye nebe , ar pyaar seh toh dkehjs e na 😭
+          </p>
+          <p class="wish-label">Cute</p>
+        </div>
+        <div class="wish-card" data-wish="1">
+          <span class="wish-emoji">🌸</span>
+          <p class="wish-text">
+            Thanks for always being there with me 👀💝, whenever I need u 🫂
+            either mentally ( to fuck up🫠 ) or physicallly 🌚💕 ( to fuck me
+            💋♥️ ) , na seriously baby jabb keu thake na tabh tui always thakis
+            amer jonno je kono situation hok na 🤧 , ami seriously toke sei time
+            e sobtheke beshi need thake 🐥💝 , I mean I always need u bandariya
+            🙈❤️
+          </p>
+          <p class="wish-label">Appreciation</p>
+        </div>
+        <div class="wish-card" data-wish="2">
+          <span class="wish-emoji">✨</span>
+          <p class="wish-text">
+            I really love u alooooottttt my racha darlo >>> 🫂💝 🧿, but tui
+            bujhis e na neka 🫠 , je ami toke seriously khub khub jhhbbb valo
+            bashi , and I can't survive with u pocha 🐒 , tui tar faida lutis ,
+            not good 😔, Just wanna say ~ Te Amo Cutie 🌚💕
+          </p>
+          <p class="wish-label">Emotional</p>
+        </div>
+        <div class="wish-card" data-wish="3">
+          <span class="wish-emoji">💕</span>
+          <p class="wish-text">
+            Baby listen , we need to be together cutie 🤧♥️ , else how may I live ... U are the reason I live cutie , I really loves u 🌚💕 , and always will cutie 🫪♥️ ( ig 🤡 ) tui always Amer baccha thakbi , tui cheyeyo amake dur krkte parbi na , cause ami jaboi na , tor desert chere 🌚💋, uff desert 😭🫶🏻 , ar tor mandu cheeks 🫪 , mone hoi jaani dhrie kissie di 🫂💝
+          </p>
+          <p class="wish-label">Deep</p>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-secondary"
+        id="wishesNext"
+        style="margin-top: 1.5rem"
+      >
+        Next →
+      </button>
+    </section>
+
+    <!-- Wish Modal -->
+    <div class="wish-modal-overlay" id="wishModalOverlay">
+      <div class="wish-modal">
+        <span class="wish-emoji" id="modalEmoji"></span>
+        <p class="wish-text" id="modalText"></p>
+        <p class="wish-label" id="modalLabel"></p>
+        <button class="wish-modal-close" id="wishModalClose">Close</button>
       </div>
     </div>
 
-    <button class="btn btn-secondary" id="wishesNext" style="margin-top:1.5rem;">Next →</button>
-  </section>
+    <!-- ===== 4. MEMORIES SECTION ===== -->
+    <section class="section" id="memories">
+      <h2 class="section-title">Memory Cards 📸</h2>
 
-  <!-- Wish Modal -->
-  <div class="wish-modal-overlay" id="wishModalOverlay">
-    <div class="wish-modal">
-      <span class="wish-emoji" id="modalEmoji"></span>
-      <p class="wish-text" id="modalText"></p>
-      <p class="wish-label" id="modalLabel"></p>
-      <button class="wish-modal-close" id="wishModalClose">Close</button>
+      <div class="memory-grid" id="memoryGrid">
+        <!-- REPLACE: Memory / Image / Date / Description -->
+        <div class="polaroid" data-mem="0">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 1"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#ff6b9d,#cdb4db)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">A Special Day 💖</p>
+            <p class="polaroid-date">08 May 2025</p>
+          </div>
+          <span class="polaroid-sticker">🐰</span>
+        </div>
+        <div class="polaroid" data-mem="1">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 2"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#cdb4db,#ff6b9d)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">That One Evening 🌸</p>
+            <p class="polaroid-date">14 Feb 2025</p>
+          </div>
+          <span class="polaroid-sticker">🎀</span>
+        </div>
+        <div class="polaroid" data-mem="2">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 3"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#ff8ec4,#b8a9c9)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">Us Being Us 😄</p>
+            <p class="polaroid-date">01 Jan 2025</p>
+          </div>
+          <span class="polaroid-sticker">💕</span>
+        </div>
+        <div class="polaroid" data-mem="3">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 4"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#ffd700,#ff6b9d)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">Golden Hour ✨</p>
+            <p class="polaroid-date">25 Dec 2024</p>
+          </div>
+          <span class="polaroid-sticker">🐰</span>
+        </div>
+        <div class="polaroid" data-mem="4">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 5"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#ff6b9d,#ffd700)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">First Laugh 💖</p>
+            <p class="polaroid-date">15 Nov 2024</p>
+          </div>
+          <span class="polaroid-sticker">🎀</span>
+        </div>
+        <div class="polaroid" data-mem="5">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 6"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#cdb4db,#ff8ec4)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">Unexpected 🌷</p>
+            <p class="polaroid-date">10 Oct 2024</p>
+          </div>
+          <span class="polaroid-sticker">💕</span>
+        </div>
+        <div class="polaroid" data-mem="6">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 7"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#ff85a2,#cdb4db)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">Best Day Ever 🌸</p>
+            <p class="polaroid-date">08 Aug 2024</p>
+          </div>
+          <span class="polaroid-sticker">🐰</span>
+        </div>
+        <div class="polaroid" data-mem="7">
+          <img
+            src="assets/images/placeholder.jpg"
+            alt="Memory 8"
+            onerror="
+              this.style.background = 'linear-gradient(135deg,#b8a9c9,#ff6b9d)';
+              this.removeAttribute('src');
+            "
+          />
+          <div class="polaroid-info">
+            <p class="polaroid-title">Just You 💖</p>
+            <p class="polaroid-date">01 May 2024</p>
+          </div>
+          <span class="polaroid-sticker">🎀</span>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-secondary"
+        id="memoriesNext"
+        style="margin-top: 1.5rem"
+      >
+        Next →
+      </button>
+    </section>
+
+    <!-- Memory Modal -->
+    <div class="memory-modal-overlay" id="memoryModalOverlay">
+      <div class="memory-modal">
+        <img src="" alt="" id="memModalImg" />
+        <div class="memory-modal-info">
+          <h3 id="memModalTitle"></h3>
+          <p class="mem-date" id="memModalDate"></p>
+          <!-- REPLACE: Description -->
+          <p class="mem-desc" id="memModalDesc"></p>
+        </div>
+        <button class="memory-modal-close" id="memModalClose">Close</button>
+      </div>
     </div>
-  </div>
 
-  <!-- ===== 4. MEMORIES SECTION ===== -->
-  <section class="section" id="memories">
-    <h2 class="section-title">Memory Cards 📸</h2>
+    <!-- ===== 5. SECRET SECTION ===== -->
+    <section class="section" id="secret">
+      <button class="secret-btn" id="secretBtn">
+        Don't click… seriously 😶
+      </button>
+      <div class="secret-reveal" id="secretReveal">
+        <p class="secret-line1">
+          Jantam , amer cutie toh atoh sohoje amer kotha toh shone na 🫪😒
+        </p>
+        <p class="secret-line2">
+          Baby ❤️ , Happiest Birthday to u 💋💕, ar warm wishses dilam na cause
+          ota toh ami giye debo 😘.. heheh , enjoy ur day my cutie ( ofc with me
+          pagalu 🥳)
+        </p>
+      </div>
+      <!-- BUG FIX 2: Changed display:none to visibility:hidden to avoid Safari flex conflict -->
+      <button
+        class="btn btn-secondary"
+        id="secretNext"
+        style="visibility: hidden; margin-top: 2rem"
+      >
+        Next →
+      </button>
+    </section>
 
-    <div class="memory-grid" id="memoryGrid">
-      <!-- REPLACE: Memory / Image / Date / Description -->
-      <div class="polaroid" data-mem="0">
-        <img src="assets/images/placeholder.jpg" alt="Memory 1" onerror="this.style.background='linear-gradient(135deg,#ff6b9d,#cdb4db)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">A Special Day 💖</p>
-          <p class="polaroid-date">08 May 2025</p>
-        </div>
-        <span class="polaroid-sticker">🐰</span>
-      </div>
-      <div class="polaroid" data-mem="1">
-        <img src="assets/images/placeholder.jpg" alt="Memory 2" onerror="this.style.background='linear-gradient(135deg,#cdb4db,#ff6b9d)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">That One Evening 🌸</p>
-          <p class="polaroid-date">14 Feb 2025</p>
-        </div>
-        <span class="polaroid-sticker">🎀</span>
-      </div>
-      <div class="polaroid" data-mem="2">
-        <img src="assets/images/placeholder.jpg" alt="Memory 3" onerror="this.style.background='linear-gradient(135deg,#ff8ec4,#b8a9c9)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">Us Being Us 😄</p>
-          <p class="polaroid-date">01 Jan 2025</p>
-        </div>
-        <span class="polaroid-sticker">💕</span>
-      </div>
-      <div class="polaroid" data-mem="3">
-        <img src="assets/images/placeholder.jpg" alt="Memory 4" onerror="this.style.background='linear-gradient(135deg,#ffd700,#ff6b9d)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">Golden Hour ✨</p>
-          <p class="polaroid-date">25 Dec 2024</p>
-        </div>
-        <span class="polaroid-sticker">🐰</span>
-      </div>
-      <div class="polaroid" data-mem="4">
-        <img src="assets/images/placeholder.jpg" alt="Memory 5" onerror="this.style.background='linear-gradient(135deg,#ff6b9d,#ffd700)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">First Laugh 💖</p>
-          <p class="polaroid-date">15 Nov 2024</p>
-        </div>
-        <span class="polaroid-sticker">🎀</span>
-      </div>
-      <div class="polaroid" data-mem="5">
-        <img src="assets/images/placeholder.jpg" alt="Memory 6" onerror="this.style.background='linear-gradient(135deg,#cdb4db,#ff8ec4)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">Unexpected 🌷</p>
-          <p class="polaroid-date">10 Oct 2024</p>
-        </div>
-        <span class="polaroid-sticker">💕</span>
-      </div>
-      <div class="polaroid" data-mem="6">
-        <img src="assets/images/placeholder.jpg" alt="Memory 7" onerror="this.style.background='linear-gradient(135deg,#ff85a2,#cdb4db)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">Best Day Ever 🌸</p>
-          <p class="polaroid-date">08 Aug 2024</p>
-        </div>
-        <span class="polaroid-sticker">🐰</span>
-      </div>
-      <div class="polaroid" data-mem="7">
-        <img src="assets/images/placeholder.jpg" alt="Memory 8" onerror="this.style.background='linear-gradient(135deg,#b8a9c9,#ff6b9d)';this.removeAttribute('src')">
-        <div class="polaroid-info">
-          <p class="polaroid-title">Just You 💖</p>
-          <p class="polaroid-date">01 May 2024</p>
-        </div>
-        <span class="polaroid-sticker">🎀</span>
-      </div>
-    </div>
-
-    <button class="btn btn-secondary" id="memoriesNext" style="margin-top:1.5rem;">Next →</button>
-  </section>
-
-  <!-- Memory Modal -->
-  <div class="memory-modal-overlay" id="memoryModalOverlay">
-    <div class="memory-modal">
-      <img src="" alt="" id="memModalImg">
-      <div class="memory-modal-info">
-        <h3 id="memModalTitle"></h3>
-        <p class="mem-date" id="memModalDate"></p>
-        <!-- REPLACE: Description -->
-        <p class="mem-desc" id="memModalDesc"></p>
-      </div>
-      <button class="memory-modal-close" id="memModalClose">Close</button>
-    </div>
-  </div>
-
-  <!-- ===== 5. SECRET SECTION ===== -->
-  <section class="section" id="secret">
-    <button class="secret-btn" id="secretBtn">Don't click… seriously 😶</button>
-    <div class="secret-reveal" id="secretReveal">
-      <p class="secret-line1">Jantam , amer cutie toh atoh sohoje amer kotha toh shone na 🫪😒</p>
-      <p class="secret-line2">Baby ❤️ , Happiest Birthday to u 💋💕, ar warm wishses dilam na cause ota toh ami giye debo 😘.. heheh , enjoy ur day my cutie ( ofc with me pagalu 🥳)</p>
-    </div>
-    <!-- BUG FIX 2: Changed display:none to visibility:hidden to avoid Safari flex conflict -->
-    <button class="btn btn-secondary" id="secretNext" style="visibility:hidden; margin-top:2rem;">Next →</button>
-  </section>
-
-  <!-- ===== 6. FINAL SECTION ===== -->
-  <section class="section" id="final">
-    <!-- REPLACE: Final Message -->
-    <h2 class="final-title">Happy 20th Birthday<br>Miss Rachayeta Biswas ❤️</h2>
-    <p class="final-subtitle">This is just a small part of how much you mean to me.</p>
-    <button class="btn btn-primary" id="finalBtn" style="margin-top:2rem;">One last thing...</button>
-    <div class="final-last-msg" id="finalLastMsg">
-      <p>Ki vabli pyaara msg likhbo ekhane >? baaal , chutiya banaya tumko 🫵🏻😂 (thats my signature uk evabe last e twist rakha 😉) , jk , U mean alot to me cutie 😭❤️, mera jigaar ka tukda hain re tuuuu 🙈🫀💕</p>
-      <p>
-        abbb khatam hogya show , chalo kalti maaro aur mujhe kissie do 😗💋,pyaar thaa >? rate it in the scale of 1-infinity , then this much of kisses amake diye dis hogya 🤧💕
+    <!-- ===== 6. FINAL SECTION ===== -->
+    <section class="section" id="final">
+      <!-- REPLACE: Final Message -->
+      <h2 class="final-title">
+        Happy 20th Birthday<br />Miss Rachayeta Biswas ❤️
+      </h2>
+      <p class="final-subtitle">
+        This is just a small part of how much you mean to me.
       </p>
-    </div>
-  </section>
+      <button class="btn btn-primary" id="finalBtn" style="margin-top: 2rem">
+        One last thing...
+      </button>
+      <div class="final-last-msg" id="finalLastMsg">
+        <p>
+          Ki vabli pyaara msg likhbo ekhane >? baaal , chutiya banaya tumko 🫵🏻😂
+          (thats my signature uk evabe last e twist rakha 😉) , jk , U mean alot
+          to me cutie 😭❤️, mera jigaar ka tukda hain re tuuuu 🙈🫀💕
+        </p>
+        <p>
+          abbb khatam hogya show , chalo kalti maaro aur mujhe kissie do
+          😗💋,pyaar thaa >? rate it in the scale of 1-infinity , then this much
+          of kisses amake diye dis hogya 🤧💕
+        </p>
+      </div>
+    </section>
 
-  <!-- Confetti Container -->
-  <div class="confetti-container" id="confettiContainer"></div>
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
